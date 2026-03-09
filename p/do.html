@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🧸 teddy love game · fully responsive</title>
+    <style>
+        /* reset + base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Comic Neue', 'Chalkboard SE', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fde2e4 0%, #ffeaf3 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* floating background emojis - responsive size */
+        .float-bg {
+            position: absolute;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            opacity: 0.2;
+            pointer-events: none;
+            user-select: none;
+            animation: floating 10s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-25px) rotate(6deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        /* positioning with responsiveness */
+        .bg1 {
+            top: 2%;
+            left: 1%;
+            animation-duration: 9s;
+        }
+
+        .bg2 {
+            bottom: 3%;
+            right: 2%;
+            animation-duration: 12s;
+        }
+
+        .bg3 {
+            top: 12%;
+            right: 5%;
+            animation-duration: 8s;
+        }
+
+        .bg4 {
+            bottom: 10%;
+            left: 4%;
+            animation-duration: 11s;
+        }
+
+        .bg5 {
+            top: 70%;
+            left: 8%;
+            animation-duration: 10s;
+        }
+
+        .bg6 {
+            top: 20%;
+            right: 10%;
+            animation-duration: 13s;
+        }
+
+        /* main card - fully fluid */
+        .card {
+            background: rgba(255, 250, 250, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: max(40px, min(8vw, 70px));
+            padding: clamp(1.8rem, 6vw, 3.5rem) clamp(1.2rem, 5vw, 3rem);
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(255, 100, 150, 0.4),
+                0 0 0 3px rgba(255, 255, 255, 0.9) inset;
+            border: 2px solid #ffd9e8;
+            z-index: 20;
+        }
+
+        /* teddy row - responsive flex */
+        .teddy-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 3vw, 25px);
+            flex-wrap: wrap;
+            margin-bottom: clamp(10px, 3vh, 25px);
+        }
+
+        .teddy-row span {
+            font-size: clamp(3rem, 12vw, 6rem);
+            filter: drop-shadow(0 8px 14px #ffa5c0);
+            animation: teddyBounce 2.4s infinite;
+            line-height: 1;
+        }
+
+        .teddy-row span:nth-child(2) {
+            animation-delay: 0.3s;
+            font-size: clamp(3.5rem, 14vw, 7rem);
+        }
+
+        .teddy-row span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes teddyBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* heading - fluid typography */
+        h1 {
+            font-size: clamp(2.5rem, 10vw, 5.5rem);
+            font-weight: 800;
+            background: linear-gradient(145deg, #d43f63, #b1325a, #ff7c9f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 10px 20px #ffb6c9;
+            margin-bottom: 0.2rem;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .sub-head {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            background: rgba(255, 220, 240, 0.8);
+            padding: 0.6rem 1.8rem;
+            border-radius: 100px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            margin: 0.8rem 0 1.2rem;
+            border: 2px dashed white;
+            color: #a52d55;
+            max-width: 95%;
+            word-break: break-word;
+        }
+
+        /* button container - fully responsive */
+        .button-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(20px, 5vh, 40px);
+            margin: 30px 0 20px;
+            width: 100%;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(15px, 4vw, 40px);
+            width: 100%;
+        }
+
+        /* buttons - fluid size, never overflow */
+        .btn {
+            border: none;
+            font-weight: 700;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 20px 35px rgba(255, 80, 130, 0.5);
+            transition: all 0.2s ease;
+            border: 4px solid white;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            padding: clamp(12px, 3vw, 22px) clamp(20px, 6vw, 55px);
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            white-space: nowrap;
+            flex-wrap: wrap;
+        }
+
+        /* make buttons not too wide on small screens */
+        @media (max-width: 480px) {
+            .btn {
+                white-space: normal;
+                min-width: 200px;
+                padding: 15px 20px;
+            }
+        }
+
+        .yes-btn {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .yes-btn:hover:not(:disabled) {
+            background: #ff2f55;
+            transform: scale(1.05);
+        }
+
+        .no-btn {
+            background: #3d3d3d;
+            color: #f5f5f5;
+            box-shadow: 0 20px 30px #8f8f8f;
+        }
+
+        .no-btn:hover:not(:disabled) {
+            background: #555;
+            transform: scale(1.02);
+        }
+
+        /* tease message container - fully responsive */
+        .tease-container {
+            width: 100%;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .tease-message {
+            background: rgba(255, 245, 200, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 80px;
+            padding: clamp(1rem, 4vw, 1.8rem) clamp(1.5rem, 6vw, 2.8rem);
+            font-size: clamp(1.3rem, 4vw, 2.2rem);
+            font-weight: 600;
+            color: #b3355e;
+            border: 4px solid white;
+            box-shadow: 0 15px 30px #ffb8cf;
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(10px, 3vw, 25px);
+            animation: pop 0.3s ease-out;
+            max-width: 95%;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .love-reply {
+            background: #ffd9e8;
+            padding: clamp(1.2rem, 5vw, 2rem) clamp(1.5rem, 7vw, 3rem);
+            border-radius: 100px;
+            border: 5px solid white;
+            box-shadow: 0 20px 40px #ffb6c1;
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(10px, 3vw, 30px);
+            font-size: clamp(1.6rem, 5vw, 3rem);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+            max-width: 100%;
+            word-break: break-word;
+        }
+
+        .footer-note {
+            margin-top: clamp(20px, 5vh, 40px);
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            background: rgba(255, 240, 245, 0.9);
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 2px solid white;
+            color: #a14160;
+            display: inline-block;
+            max-width: 100%;
+            word-break: break-word;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* extra small devices (landscape phones) */
+        @media (max-width: 380px) {
+            .btn {
+                min-width: 160px;
+                font-size: 1.5rem;
+            }
+
+            .teddy-row span {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* for very tall screens, keep everything centered */
+        @media (min-height: 900px) {
+            .card {
+                padding: 4rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- floating background (responsive emojis) -->
+    <div class="float-bg bg1">🧸</div>
+    <div class="float-bg bg2">❤️</div>
+    <div class="float-bg bg3">🧸</div>
+    <div class="float-bg bg4">💖</div>
+    <div class="float-bg bg5">🧸</div>
+    <div class="float-bg bg6">💘</div>
+
+    <!-- main card - fully responsive -->
+    <div class="card">
+        <div class="teddy-row">
+            <span>🧸</span>
+            <span>🧸❤️🧸</span>
+            <span>🧸</span>
+        </div>
+
+        <h1>do you love me?</h1>
+        <div class="sub-head">🐻 keep pressing NO, see what happens 🐻</div>
+
+        <!-- interactive zone -->
+        <div class="button-panel">
+            <div class="button-row">
+                <button class="btn yes-btn" id="yesBtn">
+                    <span>💖</span> YES <span>🧸</span>
+                </button>
+
+                <button class="btn no-btn" id="noBtn">
+                    <span>😈</span> NO <span>👿</span>
+                </button>
+            </div>
+
+            <!-- teasing message appears here -->
+            <div class="tease-container">
+                <div id="teaseMessage" class="tease-message hidden">
+                    <span>🧸</span>
+                    <span id="teaseText"></span>
+                    <span>🧸</span>
+                </div>
+            </div>
+
+            <!-- final love message -->
+            <div id="loveMessage" class="love-reply hidden">
+                <span>🧸💘</span> i knew it! love you too! <span>💘🧸</span>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            💬 press NO for funny replies · fully responsive 💬
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // DOM elements
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const teaseMessage = document.getElementById('teaseMessage');
+            const teaseText = document.getElementById('teaseText');
+            const loveMessage = document.getElementById('loveMessage');
+
+            // funny english lines (more variety)
+            const funnyLines = [
+                "🙈 your finger is lying!",
+                "😏 you know you wanna press YES",
+                "🧸 teddy is judging you",
+                "💥 this button is cursed",
+                "😚 just give in ...",
+                "🌸 still no? i'll wait~",
+                "🤭 you're smiling! press YES",
+                "💘 too late, i love you",
+                "🐻 BEAR HUG!!! now yes",
+                "😜 nice try but YES wins",
+                "🎈 no doesn't exist here",
+                "💋 one day you'll say yes",
+                "✨ teddy magic: NO → YES",
+                "🍭 you can't escape love",
+                "😘 even your eyes say yes",
+                "🧸 stop being stubborn 🧸",
+                "😈 no means yes in teddy land",
+                "💞  try again, beautiful",
+                "🐨 koala says yes, not no",
+                "🌟 you're blushing!!"
+            ];
+
+            // function to show random tease
+            function showRandomTease() {
+                if (yesBtn.disabled) return; // game already finished
+
+                const randomIndex = Math.floor(Math.random() * funnyLines.length);
+                teaseText.textContent = funnyLines[randomIndex];
+                teaseMessage.classList.remove('hidden');
+                loveMessage.classList.add('hidden'); // hide love msg if visible
+
+                // also ensure no overflow / message fits
+            }
+
+            // hover on no -> tease
+            noBtn.addEventListener('mouseenter', function () {
+                showRandomTease();
+            });
+
+            // click no -> tease + fun feedback
+            noBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (yesBtn.disabled) return;
+
+                showRandomTease();
+
+                // little scale bounce for fun
+                noBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    noBtn.style.transform = 'scale(1)';
+                }, 150);
+
+                return false;
+            });
+
+            // touch support for mobile (show tease on touch start)
+            noBtn.addEventListener('touchstart', function (e) {
+                if (yesBtn.disabled) return;
+                // on mobile we show tease without preventing click
+                showRandomTease();
+            }, { passive: true });
+
+            // yes button click
+            yesBtn.addEventListener('click', function () {
+                // hide tease, show love message
+                teaseMessage.classList.add('hidden');
+                loveMessage.classList.remove('hidden');
+
+                // update yes button
+                yesBtn.innerHTML = '<span>🧸💖</span> YESS! <span>💖🧸</span>';
+                yesBtn.disabled = true;
+                yesBtn.style.opacity = '0.9';
+                yesBtn.style.cursor = 'default';
+
+                // disable no button and make it fade
+                noBtn.disabled = true;
+                noBtn.style.backgroundColor = '#a5a5a5';
+                noBtn.style.pointerEvents = 'none';
+                noBtn.style.opacity = '0.7';
+                noBtn.innerHTML = '<span>😶</span> no <span>😶</span>';
+            });
+
+            // ensure no context menu on buttons (clean)
+            noBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+            yesBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            // optional: show a tease after few seconds to invite interaction
+            setTimeout(() => {
+                if (!yesBtn.disabled && teaseMessage.classList.contains('hidden')) {
+                    // show a friendly invite but not too intrusive
+                    teaseText.textContent = "🐻 press NO for fun!";
+                    teaseMessage.classList.remove('hidden');
+                }
+            }, 2000);
+
+            // responsive: on window resize, we don't need to do anything, css handles.
+            // but we can ensure tease message doesn't overflow (already done)
+        })();
+    </script>
+</body>
+
+</html>
